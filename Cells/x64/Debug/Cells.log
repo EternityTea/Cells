@@ -1,0 +1,4 @@
+﻿  Cells.cpp
+C:\Users\SpirittripS\source\repos\Cells\Cells\Cells.cpp(17,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\source\repos\Cells\Cells\Cells.cpp(108,39): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  Cells.vcxproj -> C:\Users\SpirittripS\source\repos\Cells\x64\Debug\Cells.exe
