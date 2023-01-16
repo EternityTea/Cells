@@ -37,3 +37,10 @@ void Cell::print() {
 		cout << HP;
 	}
 }
+
+void Cell::setCurCom(int x) {
+	curCom += x;
+	if (curCom >= 64) {
+		curCom -= 64;
+	}
+}
