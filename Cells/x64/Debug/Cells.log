@@ -1,4 +1,9 @@
 ﻿  Cells.cpp
-C:\Users\SpirittripS\source\repos\Cells\Cells\Cells.cpp(17,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-C:\Users\SpirittripS\source\repos\Cells\Cells\Cells.cpp(108,39): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Cells.vcxproj -> C:\Users\SpirittripS\source\repos\Cells\x64\Debug\Cells.exe
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(88,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(250,43): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(254,51): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(331,39): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(352,39): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(90,20): warning C4101: yAf: неиспользованная локальная переменная
+C:\Users\SpirittripS\Documents\GitHub\CellsV2\Cells\Cells.cpp(90,15): warning C4101: xAf: неиспользованная локальная переменная
+  Cells.vcxproj -> C:\Users\SpirittripS\Documents\GitHub\CellsV2\x64\Debug\Cells.exe

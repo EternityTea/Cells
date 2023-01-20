@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 class Cell
 {
 public:
@@ -10,10 +11,12 @@ public:
 	int cordX;
 	int cordY;
 	int direction = 0;
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
 	Cell(char t, int id);
 	Cell(char t);
 	Cell();
 	void print();
 	void setCurCom(int x);
+	void setColor(int text, int bg);
 };

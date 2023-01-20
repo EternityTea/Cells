@@ -1,7 +1,13 @@
 #include "Cell.h"
 #include <iostream>
+#include <Windows.h>
 
 using namespace std;
+
+void Cell::setColor(int text, int bg) {
+	HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hStdOut, (WORD)((bg << 4) | text));
+}
 
 Cell::Cell(char t, int id) {
 	Type = t;
@@ -22,18 +28,23 @@ Cell::Cell() {
 
 void Cell::print() {
 	if (Type == 'w') {
+		setColor(5, 0);
 		cout << "@@";
 	}
 	if (Type == 'v') {
-		cout << "__";
+		setColor(1, 0);
+		cout << "  ";
 	}
 	if (Type == 'f') {
+		setColor(10, 0);
 		cout << "()";
 	}
 	if (Type == 'p') {
+		setColor(12, 0);
 		cout << "##";
 	}
 	if (Type == 'c') {
+		setColor(13, 0);
 		cout << HP;
 	}
 }

@@ -5,8 +5,8 @@
 #include <list>
 #include "Cell.h"
 using namespace std;
-const int height = 20;
-const int length = 40;
+const int height = 30;
+const int length = 60;
 
 inline bool IsKeyDown(int Key) {
     return (GetKeyState(Key) & 0x8000) != 0;
@@ -101,24 +101,34 @@ int main()
     int deaths = 0; //Сколько клеток погибло
 
     int foodCounter = 0; //счетчик еды
-    int foodCounterBoom = 3; //сколько должно пройти ходов, чтобы появилась еда
+    int foodCounterBoom = 6; //сколько должно пройти ходов, чтобы появилась еда
     int poisonCounter = 0; //счетчик яда
-    int poisonCounterBoom = 16; //сколько должно пройти ходов, чтобы появился яд
+    int poisonCounterBoom = 10; //сколько должно пройти ходов, чтобы появился яд
 
     int counterOfCommands = 0;
     int moveDir = 0;
 
     int flag; //флаг для незначительных операций
 
-    int frequency = 1000; //частота обновления
+    int frequency = 0; //частота обновления
 
     list <int> daysAliveCycle;
+    bool hideMap = false;
 
     //создание карты
     for (int i = 0; i < height; i++) { 
         for (int j = 0; j < length; j++) {
             field[i][j] = V;
             if (i == 0 || j == 0 || i == height - 1 || j == length - 1) {
+                field[i][j] = W;
+            }
+            if (j == length / 4 && i < height / 1.5) {
+                field[i][j] = W;
+            }
+            if (j == length / 2 && i > height / 3) {
+                field[i][j] = W;
+            }
+            if (j == 3*length / 4 && i < height / 1.5) {
                 field[i][j] = W;
             }
         }
@@ -164,6 +174,8 @@ int main()
         cout << "-----Меню-----" << endl;
         cout << "1. Продолжить" << endl;
         cout << "2. Сколько ходов пережили поколения" << endl;
+        cout << "3. Переключить отображение карты" << endl;
+        cout << "4. Установить задержку" << endl;
         cout << endl;
         cin >> choice;
         
@@ -176,31 +188,38 @@ int main()
             }
             system("pause");
         }
+        if (choice == 3) {
+            if (hideMap == false) {
+                hideMap = true;
+            }
+            else {
+                hideMap = false;
+            }
+        }
+        if (choice == 4) {
+            cout << "Введите частоту в мс";
+            cin >> frequency;
+        }
         if (choice == 1) {
             while (true) {
                 if (curCell == 0) {
                     turn++;
                     //рисование экрана
                     system("cls");
-                    for (int i = 0; i < height; i++) {
-                        for (int j = 0; j < length; j++) {
-                            //cout << setw(2);
-                            cout.width(2);
-                            field[i][j].print();
+                    if (hideMap == false) {
+                        for (int i = 0; i < height; i++) {
+                            for (int j = 0; j < length; j++) {
+                                //cout << setw(2);
+                                cout.width(2);
+                                field[i][j].print();
+                            }
+                            cout << endl;
                         }
-                        cout << endl;
                     }
                     cout << "Текущий ход: " << turn << endl;
                     cout << "Текущий цикл: " << cycle << endl;
                     cout << "Количество смертей: " << deaths << endl;
-                    int alive = 0;
-                    for (int i = 0; i < 64; i++) {
-                        if (cells[i].HP > 0) {
-                            alive++;
-                        }
-                    }
-                    cout << "Количество выживших: " << alive << endl;;
-
+                    Sleep(frequency);
                     //дебаг
                     /*cout << endl;
                     for (int i = 0; i < 64; i++) {
@@ -230,7 +249,7 @@ int main()
                         if (k == 8) {
                             srand(time(0) + i);
 
-                            flag = 1 + rand() % 3;
+                            flag = 1 + rand() % 5;
                             for (int x = 0; x < flag; x++) {
                                 srand(time(0) + i + 1);
                                 strongestCells[j].gen[rand() % 64] = rand() % 64;
@@ -251,6 +270,15 @@ int main()
                         for (int j = 0; j < length; j++) {
                             field[i][j] = V;
                             if (i == 0 || j == 0 || i == height - 1 || j == length - 1) {
+                                field[i][j] = W;
+                            }
+                            if (j == length / 4 && i < height / 1.5) {
+                                field[i][j] = W;
+                            }
+                            if (j == length / 2 && i > height / 3) {
+                                field[i][j] = W;
+                            }
+                            if (j == 3 * length / 4 && i < height / 1.5) {
                                 field[i][j] = W;
                             }
                         }
@@ -295,9 +323,12 @@ int main()
                 }
 
                 //добавление еды
+                
                 foodCounter++;
-                if (foodCounter == foodCounterBoom) {
+                if (foodCounter > foodCounterBoom) {
+                    counterOfCommands = 0;
                     while (true) {
+                        srand(time(0) + rand());
                         x = 1 + rand() % length - 2;
                         y = 1 + rand() % height - 2;
                         if (field[y][x].Type == 'v') {
@@ -306,16 +337,19 @@ int main()
                             break;
                         }
                         counterOfCommands++;
-                        if (counterOfCommands == 5) {
+                        if (counterOfCommands == 50) {
+                            foodCounter = 0;
                             break;
                         }
                     }
                 }
-                counterOfCommands = 0;
+                
                 //добавление яда
                 poisonCounter++;
                 if (poisonCounter == poisonCounterBoom) {
+                    counterOfCommands = 0;
                     while (true) {
+                        srand(time(0) + rand());
                         x = 1 + rand() % length - 2;
                         y = 1 + rand() % height - 2;
                         if (field[y][x].Type == 'v') {
@@ -323,7 +357,9 @@ int main()
                             poisonCounter = 0;
                             break;
                         }
-                        if (counterOfCommands == 5) {
+                        counterOfCommands++;
+                        if (counterOfCommands == 50) {
+                            poisonCounter = 0;
                             break;
                         }
                     }
